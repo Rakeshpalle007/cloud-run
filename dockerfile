@@ -1,19 +1,14 @@
-# Use Node.js base image
-FROM node:18
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files and install dependencies
+# Let's get the base image of node14
+FROM node:14
+# Create app directory
+WORKDIR /usr/src/app
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+# Install app dependencies
 RUN npm install
-
-# Copy app source code
+# Bundle app source
 COPY . .
-
-# Start the app
-CMD ["node", "server.js"]
-
-# Cloud Run expects the app to listen on PORT
-ENV PORT=8080
+# Binding port
 EXPOSE 8080
+# Command to run our app
+CMD [ "node", "server.js"]
